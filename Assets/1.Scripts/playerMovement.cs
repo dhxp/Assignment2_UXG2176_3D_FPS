@@ -124,7 +124,10 @@ public class playerMovement : MonoBehaviour
 
         //Climbing
         if (Physics.Raycast(transform.position, orientation.forward, 1, whatIsLadder) && moveDirection.y > .9f)
+        {
+            Debug.Log("trying to climb");
             Climb();
+        }
         else alreadyStoppedAtLadder = false;
     }
 
@@ -282,11 +285,12 @@ public class playerMovement : MonoBehaviour
             rb.AddForce(orientation.forward * 500 * Time.deltaTime);
         }
 
-        //Push character up
-        if (rb.velocity.magnitude < maxClimbSpeed)
-            rb.AddForce(orientation.up * climbForce * Time.deltaTime);
 
-        //Doesn't Push into the wall
+        if (rb.velocity.magnitude < maxClimbSpeed)
+        {
+            rb.AddForce(orientation.up * climbForce*10 * Time.deltaTime);
+        }
+
         if (!Input.GetKey(KeyCode.S)) moveDirection.y = 0;
     }
 
