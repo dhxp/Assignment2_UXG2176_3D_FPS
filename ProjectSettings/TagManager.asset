@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -11,15 +12,15 @@ TagManager:
   - 
   - Water
   - UI
-  - whatisPlayer
   - 
   - 
-  - whatIsWall
-  - whatIsGround
-  - 
-  - 
-  - 
-  - whatIsKnife
+  - WhatIsGround
+  - WhatIsWall
+  - WhatIsLadder
+  - WhatIsEnemy
+  - WhatIsPlayer
+  - PostProcessing
+  - WhatIsBullet
   - 
   - 
   - 
