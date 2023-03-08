@@ -37,7 +37,7 @@ public class playerMovement : MonoBehaviour
     private bool readyToJump = true;
     private float jumpCooldown = 0.25f;
     public float jumpForce = 550f;
-
+    private float desiredX;
     public int startDoubleJumps = 1;
     int doubleJumpsLeft;
 
@@ -45,7 +45,7 @@ public class playerMovement : MonoBehaviour
 
     Vector3 moveDirection;
     bool jumping, sprinting, crouching;
-    
+
     //Air contorl
     public float airForwardForce;
 
@@ -90,7 +90,7 @@ public class playerMovement : MonoBehaviour
 
     private void MyInput()
     {
-        
+
         moveDirection.x = Input.GetAxisRaw("Horizontal");
         moveDirection.y = Input.GetAxisRaw("Vertical");
         moveDirection = Vector3.ClampMagnitude(moveDirection, 1);
@@ -114,7 +114,7 @@ public class playerMovement : MonoBehaviour
         }
 
         //AirDash
-        if ((Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.D)) 
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
         && dashTappedTimes <= 1)
         {
             dashTappedTimes++;
@@ -196,7 +196,7 @@ public class playerMovement : MonoBehaviour
         //Apply forces to move player
         rb.AddForce(orientation.transform.forward * moveDirection.y * moveSpeed * 10 * Time.deltaTime * multiplier * multiplierV);
         rb.AddForce(orientation.transform.right * moveDirection.x * moveSpeed * 10 * Time.deltaTime * multiplier);
-        
+
     }
 
     private void Jump()
@@ -274,12 +274,10 @@ public class playerMovement : MonoBehaviour
 
     private void Climb()
     {
-        //Makes possible to climb even when falling down fast
         Vector3 vel = rb.velocity;
         if (rb.velocity.y < 0.5f && !alreadyStoppedAtLadder)
         {
             rb.velocity = new Vector3(vel.x, 0, vel.z);
-            //Make sure char get's at wall
             alreadyStoppedAtLadder = true;
             rb.AddForce(orientation.forward * 500 * Time.deltaTime);
         }
@@ -292,7 +290,7 @@ public class playerMovement : MonoBehaviour
         if (!Input.GetKey(KeyCode.S)) moveDirection.y = 0;
     }
 
-    private float desiredX;
+
     private void Look()
     {
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
@@ -307,7 +305,7 @@ public class playerMovement : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         //Perform the rotations
-        playerCam.transform.localRotation = Quaternion.Euler(xRotation, desiredX,0);
+        playerCam.transform.localRotation = Quaternion.Euler(xRotation, desiredX, 0);
         orientation.transform.localRotation = Quaternion.Euler(0, desiredX, 0);
     }
     private void FixMovement(float x, float y, Vector2 mag)
